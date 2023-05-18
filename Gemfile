@@ -65,6 +65,9 @@ group :development do
 
   # Ruby code style checker (linter) and formatter
   gem 'rubocop-rails', require: false
+
+  # RSpec
+  gem 'rspec-rails', '~> 6.0.0'
 end
 
 group :test do
