@@ -36,7 +36,7 @@ module NongkrongAPI
     config.action_cable.url = ENV.fetch('ACTION_CABLE_FRONTEND_URL') { 'ws://localhost:28080' }
 
     # Only allow connections to Action Cable from these domains.
-    origins = ENV.fetch('ACTION_CABLE_ALLOWED_REQUEST_ORIGINS') { "http:\/\/localhost*" }.split(',')
+    origins = ENV.fetch('ACTION_CABLE_ALLOWED_REQUEST_ORIGINS') { 'http://localhost*' }.split(',')
     origins.map! { |url| /#{url}/ }
     config.action_cable.allowed_request_origins = origins
   end
