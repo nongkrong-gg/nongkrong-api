@@ -7,23 +7,44 @@ on:
   push:
     branches:
       - "main"
-      - "master"
 
 jobs:
-  test:
-    runs-on: "ubuntu-22.04"
-
+  container-job:
+    runs-on: ubuntu-latest
+    container: ruby:3.2.2
+    env:
+      POSTGRES_USER: ci
+      POSTGRES_PASSWORD: ci_1234
+    services:
+      postgres:
+        image: postgres:15.3-bullseye
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci_1234
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7.0.11-bullseye
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
-      - uses: "actions/checkout@v2"
+      - name: Check out repository code
+        uses: actions/checkout@v3
 
-      - name: "Install CI dependencies"
-        run: |
-          ./run ci:install-deps
+      - name: Install dependencies
+        run: bundle install
 
-      - name: "Test"
-        run: |
-          # Remove volumes in CI to avoid permission errors due to UID / GID.
-          sed -i "s|.:/app|/tmp:/tmp|g" .env*
-          sed -i "s|.:/app|/tmp:/tmp|g" docker-compose.yml
+      - name: Setup DB
+        run: rails db:setup
 
-          ./run ci:test
+      - name: Linter
+        run: rubocop
+
+      - name: Test
+        run: rspec
