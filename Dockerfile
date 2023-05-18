@@ -20,7 +20,7 @@ RUN bundle install
 
 ARG RAILS_ENV="production"
 ENV RAILS_ENV="${RAILS_ENV}" \
-    PATH="${PATH}:/home/ruby/.local/bin:/node_modules/.bin" \
+    PATH="${PATH}:/home/ruby/.local/bin" \
     USER="ruby"
 
 COPY --chown=ruby:ruby . .
