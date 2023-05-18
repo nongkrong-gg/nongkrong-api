@@ -2,6 +2,10 @@ require: rubocop-rails
 
 AllCops:
   NewCops: enable
+  Exclude: 
+    - 'config/environments/**'
+    - 'config/initializers/**'
+    - 'db/schema.rb'
 
 Style/FrozenStringLiteralComment:
   Enabled: false
@@ -9,6 +13,6 @@ Style/FrozenStringLiteralComment:
 Style/Documentation:
   Enabled: false
 
-Metrics/BlockLength:
-  Exclude: 
-    - 'config/environments/**'
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*'

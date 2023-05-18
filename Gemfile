@@ -45,12 +45,24 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Execute jobs in the background [https://github.com/mperham/sidekiq]
 gem 'sidekiq', '~> 7.1'
 
+# Authentication
+gem 'devise'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
 
   # Reduces boot times through caching; required in config/boot.rb
   gem 'bootsnap', require: false
+
+  # Fixtures replacement with a straightforward definition syntax
+  gem 'factory_bot_rails'
+
+  # A library for generating fake data such as names, addresses, and phone numbers
+  gem 'faker'
+
+  # RSpec
+  gem 'rspec-rails', '~> 6.0.0'
 end
 
 group :development do
@@ -65,14 +77,12 @@ group :development do
 
   # Ruby code style checker (linter) and formatter
   gem 'rubocop-rails', require: false
-
-  # RSpec
-  gem 'rspec-rails', '~> 6.0.0'
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'shoulda-matchers', '~> 5.0'
   gem 'webdrivers'
 end
