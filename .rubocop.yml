@@ -3,8 +3,8 @@ require: rubocop-rails
 AllCops:
   NewCops: enable
   Exclude: 
-    - 'config/environments/**'
-    - 'config/initializers/**'
+    - 'config/environments/*'
+    - 'config/initializers/*'
     - 'db/schema.rb'
 
 Style/FrozenStringLiteralComment:
@@ -16,3 +16,7 @@ Style/Documentation:
 Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
