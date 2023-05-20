@@ -1,4 +1,12 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter '/config/environments/'
+    add_filter '/config/initializers/'
+  end
+end
+
 require 'spec_helper'
 require 'shoulda/matchers'
 ENV['RAILS_ENV'] ||= 'test'

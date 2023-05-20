@@ -15,6 +15,7 @@ jobs:
     env:
       POSTGRES_USER: ci
       POSTGRES_PASSWORD: ci_1234
+      COVERAGE: true
     services:
       postgres:
         image: postgres:15.3-bullseye
@@ -48,3 +49,12 @@ jobs:
 
       - name: Test
         run: rspec
+
+      - name: Coverage
+        run: bin/simplecov
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: coverage/
