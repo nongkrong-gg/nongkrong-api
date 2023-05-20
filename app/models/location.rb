@@ -14,7 +14,10 @@
 #  index_locations_on_latitude_and_longitude  (latitude,longitude) UNIQUE
 #
 class Location < ApplicationRecord
-  has_one :event, dependent: :nullify, inverse_of: :location
+  has_many :finalized_events, dependent: :nullify, class_name: 'Event'
+  has_many :event_attendees, foreign_key: 'attendee_departure_location_id', dependent: :nullify,
+                             inverse_of: :attendee_departure_location
+  has_many :events, through: :event_attendees
 
   reverse_geocoded_by :latitude, :longitude
   after_validation :reverse_geocode, if: lambda { |obj|

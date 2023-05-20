@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_20_061403) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_20_125014) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "event_attendees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "event_id", null: false
+    t.uuid "attendee_id", null: false
+    t.uuid "attendee_departure_location_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendee_departure_location_id"], name: "index_event_attendees_on_attendee_departure_location_id"
+    t.index ["attendee_id"], name: "index_event_attendees_on_attendee_id"
+    t.index ["event_id", "attendee_id"], name: "index_event_attendees_on_event_id_and_attendee_id", unique: true
+    t.index ["event_id"], name: "index_event_attendees_on_event_id"
+  end
 
   create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
@@ -50,6 +62,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_20_061403) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "event_attendees", "events"
+  add_foreign_key "event_attendees", "locations", column: "attendee_departure_location_id"
+  add_foreign_key "event_attendees", "users", column: "attendee_id"
   add_foreign_key "events", "locations"
   add_foreign_key "events", "users", column: "organizer_id"
 end
