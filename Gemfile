@@ -80,6 +80,9 @@ group :development do
 
   # Ruby code style checker (linter) and formatter
   gem 'rubocop-rails', require: false
+
+  # Annotate ActiveRecord models
+  gem 'annotate'
 end
 
 group :test do
