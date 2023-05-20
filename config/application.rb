@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 module NongkrongAPI
   class Application < Rails::Application
     config.api_only = true
+    config.time_zone = 'Jakarta'
     config.session_store :cookie_store, key: '_interslice_session'
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
