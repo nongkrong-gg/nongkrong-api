@@ -3,9 +3,13 @@ require 'rails_helper'
 RSpec.describe Location, type: :model do
   subject { build(:location) }
 
-  it { should validate_presence_of(:latitude) }
-  it { should validate_presence_of(:longitude) }
-  it { should validate_uniqueness_of(:latitude).scoped_to(:longitude) }
+  describe 'validations' do
+    it { should be_valid }
+    it { should have_one(:event).dependent(:nullify).inverse_of(:location) }
+    it { should validate_presence_of(:latitude) }
+    it { should validate_presence_of(:longitude) }
+    it { should validate_uniqueness_of(:latitude).scoped_to(:longitude) }
+  end
 
   describe 'reverse geocoding' do
     it 'should reverse geocode when latitude and longitude are present' do
