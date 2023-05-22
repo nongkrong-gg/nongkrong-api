@@ -15,6 +15,7 @@ x-app: &default-app
   stop_grace_period: "3s"
   tty: true
   volumes:
+    - "bundle_cache:/usr/local/bundle"
     - "${DOCKER_WEB_VOLUME:-./public:/app/public}"
 
 services:
@@ -62,9 +63,6 @@ services:
       retries: 3
     ports:
       - "${DOCKER_WEB_PORT_FORWARD:-127.0.0.1:8000}:${PORT:-8000}"
-    volumes:
-      - "bundle_cache:/usr/local/bundle"
-      - ".:/app"
     profiles: ["api"]
 
   worker:

@@ -50,11 +50,11 @@ jobs:
       - name: Test
         run: rspec
 
-      - name: Coverage
-        run: bin/simplecov
-
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
           path: coverage/
+
+      - name: Coverage
+        run: bin/simplecov

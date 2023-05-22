@@ -8,11 +8,12 @@ Bundler.require(*Rails.groups)
 
 module NongkrongAPI
   class Application < Rails::Application
+    # Use the responders controller from the responders gem
+    config.app_generators.scaffold_controller :responders_controller
+
     config.api_only = true
     config.time_zone = 'Jakarta'
-    config.session_store :cookie_store, key: '_interslice_session'
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use config.session_store, config.session_options
+    config.session_store :disabled
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0

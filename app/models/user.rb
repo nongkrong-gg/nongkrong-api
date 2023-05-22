@@ -25,7 +25,8 @@ class User < ApplicationRecord
                                    inverse_of: :organizer
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
   validates :email, :username, :encrypted_password, presence: true
   validates :email, :username, uniqueness: true

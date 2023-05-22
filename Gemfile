@@ -47,6 +47,9 @@ gem 'sidekiq', '~> 7.1'
 
 # Authentication
 gem 'devise'
+gem 'devise-jwt'
+gem 'rack-cors'
+gem 'responders'
 
 # Geocode
 gem 'geocoder'
@@ -66,6 +69,11 @@ group :development, :test do
 
   # RSpec
   gem 'rspec-rails', '~> 6.0.0'
+
+  # Pry
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-remote'
 end
 
 group :development do
