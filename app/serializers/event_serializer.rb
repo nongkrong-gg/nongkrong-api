@@ -21,15 +21,11 @@
 #  fk_rails_...  (final_location_id => locations.id)
 #  fk_rails_...  (organizer_id => users.id)
 #
-FactoryBot.define do
-  factory :event do
-    title { Faker::Lorem.word }
-    description { Faker::Lorem.sentence }
-    date { Faker::Date.forward(days: 30) }
-    organizer { association(:user) }
+class EventSerializer
+  include JSONAPI::Serializer
 
-    trait :finalized do
-      location { association(:location) }
-    end
-  end
+  attributes :title, :description, :date
+  belongs_to :organizer, serializer: UserSerializer
+  belongs_to :final_location, serializer: LocationSerializer
+  has_many :event_attendees, serializer: EventAttendeeSerializer
 end

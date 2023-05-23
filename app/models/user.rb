@@ -20,9 +20,9 @@
 #
 class User < ApplicationRecord
   has_many :event_attendees, foreign_key: 'attendee_id', dependent: :destroy, inverse_of: :attendee
-  has_many :events, through: :event_attendees
-  has_many :self_organized_events, foreign_key: 'organizer_id', class_name: 'Event', dependent: :destroy,
-                                   inverse_of: :organizer
+  has_many :attended_events, through: :event_attendees, source: :event
+  has_many :organized_events, foreign_key: 'organizer_id', class_name: 'Event', dependent: :destroy,
+                              inverse_of: :organizer
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,

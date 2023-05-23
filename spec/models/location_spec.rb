@@ -21,14 +21,20 @@ RSpec.describe Location, type: :model do
   describe 'validations' do
     it { should be_valid }
 
-    it { should have_many(:finalized_events).dependent(:nullify).class_name('Event') }
+    it {
+      should have_many(:finalized_events)
+        .dependent(:nullify)
+        .class_name('Event')
+        .with_foreign_key('final_location_id')
+        .inverse_of(:final_location)
+    }
     it {
       should have_many(:event_attendees)
         .dependent(:nullify)
         .with_foreign_key('attendee_departure_location_id')
         .inverse_of(:attendee_departure_location)
     }
-    it { should have_many(:events).through(:event_attendees) }
+    it { should have_many(:attender_events).through(:event_attendees) }
 
     it { should validate_presence_of(:latitude) }
     it { should validate_presence_of(:longitude) }

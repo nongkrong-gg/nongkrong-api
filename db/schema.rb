@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_22_171138) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_23_150704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -32,10 +32,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_171138) do
     t.text "description"
     t.datetime "date", null: false
     t.uuid "organizer_id", null: false
-    t.uuid "location_id"
+    t.uuid "final_location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["location_id"], name: "index_events_on_location_id"
+    t.index ["final_location_id"], name: "index_events_on_final_location_id"
     t.index ["organizer_id"], name: "index_events_on_organizer_id"
   end
 
@@ -73,6 +73,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_171138) do
   add_foreign_key "event_attendees", "events"
   add_foreign_key "event_attendees", "locations", column: "attendee_departure_location_id"
   add_foreign_key "event_attendees", "users", column: "attendee_id"
-  add_foreign_key "events", "locations"
+  add_foreign_key "events", "locations", column: "final_location_id"
   add_foreign_key "events", "users", column: "organizer_id"
 end

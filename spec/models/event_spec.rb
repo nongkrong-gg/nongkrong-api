@@ -2,23 +2,23 @@
 #
 # Table name: events
 #
-#  id           :uuid             not null, primary key
-#  date         :datetime         not null
-#  description  :text
-#  title        :string           not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  location_id  :uuid
-#  organizer_id :uuid             not null
+#  id                :uuid             not null, primary key
+#  date              :datetime         not null
+#  description       :text
+#  title             :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  final_location_id :uuid
+#  organizer_id      :uuid             not null
 #
 # Indexes
 #
-#  index_events_on_location_id   (location_id)
-#  index_events_on_organizer_id  (organizer_id)
+#  index_events_on_final_location_id  (final_location_id)
+#  index_events_on_organizer_id       (organizer_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (location_id => locations.id)
+#  fk_rails_...  (final_location_id => locations.id)
 #  fk_rails_...  (organizer_id => users.id)
 #
 require 'rails_helper'
@@ -32,7 +32,7 @@ RSpec.describe Event, type: :model do
     it { should have_many(:event_attendees).dependent(:destroy).inverse_of(:event) }
     it { should have_many(:attendees).through(:event_attendees) }
     it { should belong_to :organizer }
-    it { should belong_to(:location).optional }
+    it { should belong_to(:final_location).optional }
 
     it { should validate_presence_of :title }
     it { should validate_presence_of :date }
