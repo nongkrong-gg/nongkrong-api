@@ -26,16 +26,6 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     it { should be_valid }
 
-    it { should have_many(:event_attendees).with_foreign_key('attendee_id').dependent(:destroy).inverse_of(:attendee) }
-    it { should have_many(:attended_events).through(:event_attendees) }
-    it {
-      should have_many(:organized_events)
-        .with_foreign_key('organizer_id')
-        .class_name('Event')
-        .dependent(:destroy)
-        .inverse_of(:organizer)
-    }
-
     it { should validate_presence_of :email }
     it { should validate_presence_of :username }
     it { should validate_presence_of :encrypted_password }

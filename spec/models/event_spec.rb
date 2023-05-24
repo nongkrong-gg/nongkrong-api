@@ -29,8 +29,12 @@ RSpec.describe Event, type: :model do
   describe 'validations' do
     it { should be_valid }
 
-    it { should have_many(:event_attendees).dependent(:destroy).inverse_of(:event) }
-    it { should have_many(:attendees).through(:event_attendees) }
+    it {
+      should have_many(:attendees)
+        .class_name('EventAttendee')
+        .dependent(:destroy)
+        .inverse_of(:event)
+    }
     it { should belong_to :organizer }
     it { should belong_to(:final_location).optional }
 

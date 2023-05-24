@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     devise_for :users, controllers: { registrations: 'api/users/registrations' }
   end
 
+  namespace :api, defaults: { format: :json } do
+    resources :events, only: %i[show]
+  end
+
   # Sidekiq ########################################################################
   #
   # require "sidekiq/web"

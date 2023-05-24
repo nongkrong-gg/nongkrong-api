@@ -24,8 +24,9 @@
 class EventSerializer
   include JSONAPI::Serializer
 
-  attributes :title, :description, :date
   belongs_to :organizer, serializer: UserSerializer
   belongs_to :final_location, serializer: LocationSerializer
-  has_many :event_attendees, serializer: EventAttendeeSerializer
+  has_many :attendees, serializer: EventAttendeeSerializer
+
+  attributes :title, :description, :date
 end

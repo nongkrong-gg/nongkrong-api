@@ -19,11 +19,6 @@
 #  index_users_on_username              (username) UNIQUE
 #
 class User < ApplicationRecord
-  has_many :event_attendees, foreign_key: 'attendee_id', dependent: :destroy, inverse_of: :attendee
-  has_many :attended_events, through: :event_attendees, source: :event
-  has_many :organized_events, foreign_key: 'organizer_id', class_name: 'Event', dependent: :destroy,
-                              inverse_of: :organizer
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist

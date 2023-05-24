@@ -22,6 +22,4 @@ class UserSerializer
   include JSONAPI::Serializer
 
   attributes :email, :username
-  has_many :organized_events, serializer: EventSerializer
-  has_many :event_attendees, serializer: EventAttendeeSerializer
 end

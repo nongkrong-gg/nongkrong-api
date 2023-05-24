@@ -13,9 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     container: ruby:3.2.2
     env:
+      RAILS_ENV: test
+      COVERAGE: true
       POSTGRES_USER: ci
       POSTGRES_PASSWORD: ci_1234
-      COVERAGE: true
+      SECRET_KEY_BASE: insecure_key_for_test
+      JWT_SECRET_KEY: insecure_key_for_test
     services:
       postgres:
         image: postgres:15.3-bullseye

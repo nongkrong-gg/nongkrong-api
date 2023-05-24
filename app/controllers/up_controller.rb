@@ -1,4 +1,4 @@
-class UpController < ActionController::API
+class UpController < ApplicationController
   def index
     head :ok
   end

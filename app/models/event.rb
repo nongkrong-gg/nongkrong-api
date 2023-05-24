@@ -22,8 +22,8 @@
 #  fk_rails_...  (organizer_id => users.id)
 #
 class Event < ApplicationRecord
-  has_many :event_attendees, dependent: :destroy, inverse_of: :event
-  has_many :attendees, through: :event_attendees
+  has_many :attendees, class_name: 'EventAttendee', dependent: :destroy, inverse_of: :event
+
   belongs_to :final_location, class_name: 'Location', optional: true
   belongs_to :organizer, class_name: 'User'
 

@@ -51,6 +51,9 @@ gem 'devise-jwt'
 gem 'rack-cors'
 gem 'responders'
 
+# Authorization
+gem 'cancancan'
+
 # Geocode
 gem 'geocoder'
 

@@ -25,7 +25,11 @@
 class EventAttendeeSerializer
   include JSONAPI::Serializer
 
-  belongs_to :event
-  belongs_to :attendee, serializer: UserSerializer
-  belongs_to :attendee_departure_location, serializer: LocationSerializer
+  attribute :user do |event_attendee|
+    UserSerializer.new(event_attendee.attendee).serializable_hash
+  end
+
+  attribute :location do |event_attendee|
+    LocationSerializer.new(event_attendee.attendee_departure_location).serializable_hash
+  end
 end
