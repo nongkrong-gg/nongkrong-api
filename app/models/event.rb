@@ -28,4 +28,9 @@ class Event < ApplicationRecord
   belongs_to :organizer, class_name: 'User'
 
   validates :title, :date, presence: true
+
+  def check_in!(attendee:, latitude:, longitude:)
+    attendee_departure_location = Location.first_or_initialize(latitude:, longitude:)
+    attendees.create!(attendee:, attendee_departure_location:)
+  end
 end

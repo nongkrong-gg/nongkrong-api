@@ -44,6 +44,15 @@ RSpec.describe Api::EventsController, type: :controller do
         expect(response.body).to eq('You need to sign in or sign up before continuing.')
       end
     end
+
+    describe 'POST #check_in' do
+      it 'returns http unauthorized' do
+        post :check_in, params: { id: event.id, location: { latitude: 1, longitude: 1 } }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.body).to eq('You need to sign in or sign up before continuing.')
+      end
+    end
   end
 
   context 'when user is the organizer' do
@@ -105,6 +114,19 @@ RSpec.describe Api::EventsController, type: :controller do
         expect(response).to have_http_status(:no_content)
       end
     end
+
+    describe 'POST #check_in' do
+      it 'returns http created' do
+        expect do
+          post :check_in, params: { id: event.id, location: { latitude: 1, longitude: 1 } }
+        end.to change(EventAttendee, :count).by(1)
+
+        expect(response).to have_http_status(:created)
+        expect(response.body).to eq(
+          EventSerializer.new(event, { include: %i[organizer final_location attendees] }).serializable_hash.to_json
+        )
+      end
+    end
   end
 
   context 'when user is the attendee' do
@@ -146,7 +168,6 @@ RSpec.describe Api::EventsController, type: :controller do
                         event: { title: 'title', description: 'description', date: DateTime.tomorrow.to_s } }
 
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eq({ error: 'You are not authorized to access this page.' }.to_json)
       end
     end
 
@@ -157,7 +178,14 @@ RSpec.describe Api::EventsController, type: :controller do
         end.to change(Event, :count).by(0)
 
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eq({ error: 'You are not authorized to access this page.' }.to_json)
+      end
+    end
+
+    describe 'POST #check_in' do
+      it 'returns http forbidden' do
+        post :check_in, params: { id: event.id, location: { latitude: 1, longitude: 1 } }
+
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

@@ -41,4 +41,32 @@ RSpec.describe Event, type: :model do
     it { should validate_presence_of :title }
     it { should validate_presence_of :date }
   end
+
+  describe '#check_in!' do
+    subject { create(:event) }
+    let(:attendee) { create(:user) }
+    let(:latitude) { Faker::Address.latitude }
+    let(:longitude) { Faker::Address.longitude }
+
+    context 'when attendee has not checked in' do
+      it 'creates an attendee' do
+        expect do
+          subject.check_in!(attendee:, latitude:, longitude:)
+        end.to change { EventAttendee.count }.by(1)
+      end
+    end
+
+    context 'when attendee has already checked in' do
+      before do
+        subject.check_in!(attendee:, latitude:, longitude:)
+      end
+
+      it 'does not create an attendee' do
+        expect do
+          subject.check_in!(attendee:, latitude:, longitude:)
+        end.to raise_error(ActiveRecord::RecordInvalid)
+          .and change { EventAttendee.count }.by(0)
+      end
+    end
+  end
 end

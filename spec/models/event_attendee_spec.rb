@@ -34,6 +34,6 @@ RSpec.describe EventAttendee, type: :model do
     it { should belong_to :attendee }
     it { should belong_to :attendee_departure_location }
 
-    it { should validate_uniqueness_of(:event_id).scoped_to(:attendee_id).case_insensitive }
+    it { should validate_uniqueness_of(:attendee_id).scoped_to(:event_id).case_insensitive }
   end
 end

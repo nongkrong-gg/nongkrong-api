@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: :json } do
-    resources :events, only: %i[show create update destroy]
+    resources :events, only: %i[show create update destroy] do
+      member do
+        post :check_in
+      end
+    end
   end
 
   # Sidekiq ########################################################################

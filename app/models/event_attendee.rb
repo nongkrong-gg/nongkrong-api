@@ -26,6 +26,7 @@ class EventAttendee < ApplicationRecord
   belongs_to :event
   belongs_to :attendee, class_name: 'User'
   belongs_to :attendee_departure_location, class_name: 'Location'
+  accepts_nested_attributes_for :attendee_departure_location
 
-  validates :event_id, uniqueness: { scope: :attendee_id }
+  validates :attendee_id, uniqueness: { scope: :event_id }
 end

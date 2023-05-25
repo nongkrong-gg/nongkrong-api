@@ -22,10 +22,22 @@ module Api
       @event.destroy
     end
 
+    def check_in
+      authorize! :check_in, @event
+
+      @event.check_in!(attendee: current_user, **check_in_params.to_h.symbolize_keys)
+
+      render json: serialized_event, status: :created
+    end
+
     protected
 
     def event_params
       params.require(:event).permit(:title, :description, :date)
+    end
+
+    def check_in_params
+      params.require(:location).permit(:latitude, :longitude)
     end
 
     def serialized_event
