@@ -6,7 +6,6 @@ if ENV['COVERAGE']
     add_filter '/config/initializers/'
     add_filter '/app/controllers/api/users/'
     add_filter '/app/lib/custom_failure.rb'
-    add_filter '/lib/application_responder.rb'
   end
 end
 

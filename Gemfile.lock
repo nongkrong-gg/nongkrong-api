@@ -353,7 +353,6 @@ DEPENDENCIES
   rack-mini-profiler
   rails (~> 7.0.4)
   redis (~> 5.0)
-  responders
   rspec-rails (~> 6.0.0)
   rubocop-rails
   selenium-webdriver

@@ -8,9 +8,6 @@ Bundler.require(*Rails.groups)
 
 module NongkrongAPI
   class Application < Rails::Application
-    # Use the responders controller from the responders gem
-    config.app_generators.scaffold_controller :responders_controller
-
     config.api_only = true
     config.time_zone = 'Jakarta'
     config.session_store :disabled

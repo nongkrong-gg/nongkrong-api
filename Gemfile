@@ -49,7 +49,6 @@ gem 'sidekiq', '~> 7.1'
 gem 'devise'
 gem 'devise-jwt'
 gem 'rack-cors'
-gem 'responders'
 
 # Authorization
 gem 'cancancan'
