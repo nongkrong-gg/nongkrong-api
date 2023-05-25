@@ -4,6 +4,7 @@ if ENV['COVERAGE']
   SimpleCov.start do
     add_filter '/config/environments/'
     add_filter '/config/initializers/'
+    add_filter '/app/controllers/application_controller.rb'
     add_filter '/app/controllers/api/users/'
     add_filter '/app/lib/custom_failure.rb'
   end

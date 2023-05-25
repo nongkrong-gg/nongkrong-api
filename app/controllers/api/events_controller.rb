@@ -10,8 +10,16 @@ module Api
       @event.save!
 
       render json: serialized_event, status: :created
-    rescue StandardError
-      render json: { errors: @event.errors }, status: :unprocessable_entity
+    end
+
+    def update
+      @event.update!(event_params)
+
+      render json: serialized_event, status: :ok
+    end
+
+    def destroy
+      @event.destroy
     end
 
     protected
