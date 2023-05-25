@@ -38,4 +38,10 @@ RSpec.describe User, type: :model do
     it { should_not allow_value('name with space').for(:username) }
     it { should allow_value('name_without_space').for(:username) }
   end
+
+  describe '#jwt_payload' do
+    it 'returns additional payload' do
+      expect(subject.jwt_payload).to eq({ email: subject.email, username: subject.username })
+    end
+  end
 end

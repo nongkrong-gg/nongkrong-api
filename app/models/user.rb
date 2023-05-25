@@ -27,4 +27,8 @@ class User < ApplicationRecord
   validates :email, :username, uniqueness: true
   validates :email, format: Devise.email_regexp
   validates :username, format: { without: /\s/ }
+
+  def jwt_payload
+    { email:, username: }
+  end
 end
