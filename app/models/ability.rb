@@ -9,5 +9,9 @@ class Ability
       event.attendees.where(attendee_id: user.id).empty?
     end
     can :read, Event
+
+    return unless user.admin?
+
+    can :manage, :all
   end
 end

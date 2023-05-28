@@ -8,6 +8,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  role                   :integer          default("user")
 #  username               :string           default(""), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -24,5 +25,9 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { '12345678' }
     password_confirmation { '12345678' }
+
+    trait :admin do
+      role { :admin }
+    end
   end
 end

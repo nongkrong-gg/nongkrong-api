@@ -8,6 +8,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  role                   :integer          default("user")
 #  username               :string           default(""), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -27,6 +28,8 @@ class User < ApplicationRecord
   validates :email, :username, uniqueness: true
   validates :email, format: Devise.email_regexp
   validates :username, format: { without: /\s/ }
+
+  enum role: { user: 0, admin: 1 }
 
   def jwt_payload
     { email:, username: }

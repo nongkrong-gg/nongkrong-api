@@ -8,6 +8,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  role                   :integer          default("user")
 #  username               :string           default(""), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -37,6 +38,8 @@ RSpec.describe User, type: :model do
 
     it { should_not allow_value('name with space').for(:username) }
     it { should allow_value('name_without_space').for(:username) }
+
+    it { should define_enum_for(:role).with_values(%i[user admin]) }
   end
 
   describe '#jwt_payload' do
