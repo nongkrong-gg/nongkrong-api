@@ -36,4 +36,12 @@ RSpec.describe EventAttendee, type: :model do
 
     it { should validate_uniqueness_of(:attendee_id).scoped_to(:event_id).case_insensitive }
   end
+
+  describe 'after_save' do
+    it 'updates the event' do
+      expect(subject.event).to receive(:calculate_midpoint_location!)
+
+      subject.save
+    end
+  end
 end

@@ -29,4 +29,12 @@ class EventAttendee < ApplicationRecord
   accepts_nested_attributes_for :attendee_departure_location
 
   validates :attendee_id, uniqueness: { scope: :event_id }
+
+  after_save :calculate_event_midpoint_location!, if: :saved_change_to_attendee_departure_location_id?
+
+  private
+
+  def calculate_event_midpoint_location!
+    event.calculate_midpoint_location!
+  end
 end

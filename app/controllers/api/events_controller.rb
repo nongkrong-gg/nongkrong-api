@@ -41,7 +41,8 @@ module Api
     end
 
     def serialized_event
-      EventSerializer.new(@event, { include: %i[organizer final_location attendees] }).serializable_hash
+      EventSerializer.new(@event,
+                          { include: %i[organizer midpoint_location final_location attendees] }).serializable_hash
     end
   end
 end

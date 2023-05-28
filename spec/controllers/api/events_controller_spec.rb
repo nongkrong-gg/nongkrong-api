@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+INCLUDE_PARAM = %i[organizer midpoint_location final_location attendees].freeze
+
 RSpec.describe Api::EventsController, type: :controller do
   let(:organizer) { create(:user) }
   let(:event) { create(:event, organizer:) }
@@ -66,7 +68,7 @@ RSpec.describe Api::EventsController, type: :controller do
 
         expect(response).to have_http_status(:success)
         expect(response.body).to eq(
-          EventSerializer.new(event, { include: %i[organizer final_location attendees] }).serializable_hash.to_json
+          EventSerializer.new(event, { include: INCLUDE_PARAM }).serializable_hash.to_json
         )
       end
     end
@@ -79,7 +81,7 @@ RSpec.describe Api::EventsController, type: :controller do
 
         expect(response).to have_http_status(:created)
         expect(response.body).to eq(
-          EventSerializer.new(event, { include: %i[organizer final_location attendees] }).serializable_hash.to_json
+          EventSerializer.new(event, { include: INCLUDE_PARAM }).serializable_hash.to_json
         )
         expect(event.title).to eq('title')
         expect(event.description).to eq('description')
@@ -97,7 +99,7 @@ RSpec.describe Api::EventsController, type: :controller do
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq(
-          EventSerializer.new(event, { include: %i[organizer final_location attendees] }).serializable_hash.to_json
+          EventSerializer.new(event, { include: INCLUDE_PARAM }).serializable_hash.to_json
         )
         expect(event.title).to eq('title')
         expect(event.description).to eq('description')
@@ -123,7 +125,7 @@ RSpec.describe Api::EventsController, type: :controller do
 
         expect(response).to have_http_status(:created)
         expect(response.body).to eq(
-          EventSerializer.new(event, { include: %i[organizer final_location attendees] }).serializable_hash.to_json
+          EventSerializer.new(event.reload, { include: INCLUDE_PARAM }).serializable_hash.to_json
         )
       end
     end
@@ -140,7 +142,7 @@ RSpec.describe Api::EventsController, type: :controller do
 
         expect(response).to have_http_status(:success)
         expect(response.body).to eq(
-          EventSerializer.new(event, { include: %i[organizer final_location attendees] }).serializable_hash.to_json
+          EventSerializer.new(event, { include: INCLUDE_PARAM }).serializable_hash.to_json
         )
       end
     end
@@ -153,7 +155,7 @@ RSpec.describe Api::EventsController, type: :controller do
 
         expect(response).to have_http_status(:created)
         expect(response.body).to eq(
-          EventSerializer.new(event, { include: %i[organizer final_location attendees] }).serializable_hash.to_json
+          EventSerializer.new(event, { include: INCLUDE_PARAM }).serializable_hash.to_json
         )
         expect(event.title).to eq('title')
         expect(event.description).to eq('description')

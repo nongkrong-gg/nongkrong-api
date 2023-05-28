@@ -45,7 +45,9 @@ jobs:
         run: bundle install
 
       - name: Setup DB
-        run: rails db:setup
+        run: |
+          rails db:create
+          rails db:migrate
 
       - name: Linter
         run: rubocop
