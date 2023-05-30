@@ -5,10 +5,7 @@ class Ability
     return if user.blank?
 
     can :manage, Event, organizer_id: user.id
-    can :check_in, Event do |event|
-      event.attendees.where(attendee_id: user.id).empty?
-    end
-    can :read, Event
+    can %i[check_in read], Event
 
     return unless user.admin?
 

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :events, only: %i[show create update destroy] do
       member do
         post :check_in
+        post :final_location
       end
     end
   end

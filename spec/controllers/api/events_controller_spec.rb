@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-INCLUDE_PARAM = %i[organizer midpoint_location final_location attendees].freeze
+INCLUDE_PARAM = %i[organizer midpoint_location attendees].freeze
 
 RSpec.describe Api::EventsController, type: :controller do
   let(:organizer) { create(:user) }
@@ -50,6 +50,16 @@ RSpec.describe Api::EventsController, type: :controller do
     describe 'POST #check_in' do
       it 'returns http unauthorized' do
         post :check_in, params: { id: event.id, location: { latitude: 1, longitude: 1 } }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.body).to eq('You need to sign in or sign up before continuing.')
+      end
+    end
+
+    describe 'POST #final_location' do
+      it 'returns http unauthorized' do
+        post :final_location,
+             params: { id: event.id, place: { id: Faker::Base.bothify('???????????????????????????') } }
 
         expect(response).to have_http_status(:unauthorized)
         expect(response.body).to eq('You need to sign in or sign up before continuing.')
@@ -129,6 +139,22 @@ RSpec.describe Api::EventsController, type: :controller do
         )
       end
     end
+
+    describe 'POST #final_location' do
+      let(:place_id) { Faker::Base.bothify('???????????????????????????') }
+
+      it 'returns http ok' do
+        post :final_location, params: { id: event.id, place: { id: place_id } }
+
+        event.reload
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to eq(
+          EventSerializer.new(event, { include: INCLUDE_PARAM }).serializable_hash.to_json
+        )
+        expect(event.final_location).to eq(place_id)
+      end
+    end
   end
 
   context 'when user is the attendee' do
@@ -187,7 +213,7 @@ RSpec.describe Api::EventsController, type: :controller do
       it 'returns http forbidden' do
         post :check_in, params: { id: event.id, location: { latitude: 1, longitude: 1 } }
 
-        expect(response).to have_http_status(:forbidden)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
