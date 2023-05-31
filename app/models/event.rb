@@ -47,6 +47,8 @@ class Event < ApplicationRecord
   private
 
   def get_location(latitude:, longitude:)
-    Location.find_or_initialize_by(latitude:, longitude:)
+    Rails.cache.fetch("location-#{latitude}-#{longitude}", expires_in: 2.days) do
+      Location.find_or_initialize_by(latitude:, longitude:)
+    end
   end
 end

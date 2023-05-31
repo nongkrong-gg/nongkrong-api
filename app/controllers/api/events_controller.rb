@@ -3,7 +3,7 @@ module Api
     load_and_authorize_resource
 
     def show
-      render json: serialized_event
+      render json: serialized_event if stale?(@event)
     end
 
     def create
